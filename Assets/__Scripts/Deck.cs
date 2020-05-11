@@ -5,6 +5,7 @@ using UnityEngine;
 public class Deck : MonoBehaviour
 {
     [Header("Set in Inspector")]
+    public bool startFaceUp = false;
     // suits
     public Sprite suitClub;
     public Sprite suitDiamond;
@@ -179,6 +180,7 @@ public class Deck : MonoBehaviour
         AddDecorators(card);
         AddPips(card);
         AddFace(card);
+        AddBack(card);
 
         return card;
     }
@@ -282,4 +284,17 @@ public class Deck : MonoBehaviour
         return (null);
     }
 
+    private void AddBack (Card card)
+    {
+        _tGO = Instantiate(prefabSprite) as GameObject;
+        _tSR = _tGO.GetComponent<SpriteRenderer>();
+        _tSR.sprite = cardBack;
+        _tGO.transform.SetParent(card.transform);
+        _tGO.transform.localPosition = Vector3.zero;
+
+        _tSR.sortingOrder = 2;
+        _tGO.name = "back";
+        card.back = _tGO;
+        card.faceUp = startFaceUp;
+    }
 }
