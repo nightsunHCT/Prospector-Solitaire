@@ -141,7 +141,7 @@ public class Deck : MonoBehaviour
         string[] letters = new string[] { "C", "D", "H", "S" };
         foreach (string s in letters)
         {
-            for (int i=0; i < cardNames.Count; i++)
+            for (int i=0; i < 13; i++)
             {
                 cardNames.Add(s + (i + 1));
             }
@@ -177,7 +177,8 @@ public class Deck : MonoBehaviour
         card.def = GetCardDefinitionByRank(card.rank);
 
         AddDecorators(card);
-       
+        AddPips(card);
+        AddFace(card);
 
         return card;
     }
@@ -223,6 +224,62 @@ public class Deck : MonoBehaviour
             _tGO.name = deco.type;
             card.decoGOs.Add(_tGO);
         }
+    }
+
+    private void AddPips(Card card)
+    {
+        foreach (Decorator pip in card.def.pips)
+        {
+            _tGO = Instantiate(prefabSprite) as GameObject;
+            _tGO.transform.SetParent(card.transform);
+            _tGO.transform.localPosition = pip.loc;
+
+            if (pip.flip)
+            {
+                _tGO.transform.rotation = Quaternion.Euler(0, 0, 180);
+            }
+
+            if (pip.scale != 1)
+            {
+                _tGO.transform.localScale = Vector3.one * pip.scale;
+            }
+
+            _tGO.name = "pip";
+            _tSR = _tGO.GetComponent<SpriteRenderer>();
+            _tSR.sprite = dictSuits[card.suit];
+            _tSR.sortingOrder = 1;
+            card.pipGOs.Add(_tGO);
+        }
+    }
+
+    private void AddFace (Card card)
+    {
+        if (card.def.face == "")
+        {
+            return; // if not a face card, its just none
+        }
+
+        _tGO = Instantiate(prefabSprite) as GameObject;
+        _tSR = _tGO.GetComponent<SpriteRenderer>();
+        _tSp = GetFace(card.def.face + card.suit);
+        _tSR.sprite = _tSp;
+        _tSR.sortingOrder = 1;
+        _tGO.transform.SetParent(card.transform);
+        _tGO.transform.localPosition = Vector3.zero;
+        _tGO.name = "face";
+
+    }
+
+    private Sprite GetFace (string faceS)
+    {
+        foreach (Sprite _tSp in faceSprites)
+        {
+            if (_tSp.name == faceS)
+            {
+                return (_tSp);
+            }
+        }
+        return (null);
     }
 
 }
