@@ -1,18 +1,28 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Prospector : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    static public Prospector S;
+
+    [Header("Set in Inspector")]
+    public TextAsset deckXML;
+
+    [Header("Set Dynamically")]
+    public Deck deck;
+
+    void Awake()
     {
-        
+        S = this;
+
     }
 
-    // Update is called once per frame
-    void Update()
+    void Start()
     {
-        
+        deck = GetComponent<Deck>();
+        deck.InitDeck(deckXML.text);
     }
 }
