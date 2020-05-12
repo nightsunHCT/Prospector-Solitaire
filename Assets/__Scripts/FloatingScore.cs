@@ -22,7 +22,7 @@ public class FloatingScore : MonoBehaviour
 
     public int score
     {
-        get { return (score); }
+        get { return (_score); }
         set
         {
             _score = value;
@@ -64,7 +64,7 @@ public class FloatingScore : MonoBehaviour
         state = eFSState.pre;
     }
 
-    public void FSCallBack(FloatingScore fs)
+    public void FSCallback(FloatingScore fs)
     {
         score += fs.score;
     }

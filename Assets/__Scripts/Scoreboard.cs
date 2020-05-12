@@ -18,7 +18,9 @@ public class Scoreboard : MonoBehaviour
 
     public int score
     {
-        get { return (_score); }
+        get { 
+            return (_score); 
+        }
         set
         {
             _score = value;
@@ -28,7 +30,9 @@ public class Scoreboard : MonoBehaviour
 
     public string scoreString
     {
-        get { return (_scoreString); }
+        get { 
+            return (_scoreString); 
+        }
         set
         {
             _scoreString = value;
